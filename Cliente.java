@@ -17,6 +17,7 @@ public class Cliente {
     private float bonus;
     private ArrayList<Pedido> listaPedidos;
     private Pagamento pagamento;
+    private Mesa mesa;
     
       
     public Cliente(String nome, String cpf, String email,MeusClientes meusCli){
@@ -30,6 +31,18 @@ public class Cliente {
      }
     public String getCPF(){
         return this.cpf;
+    }
+    public String getNome(){
+        return this.nome;
+    }
+    public float getBonus(){
+        return this.bonus;
+    }
+    public String getEmail(){
+        return this.email;
+    }
+    public Mesa getMesa(){
+        return this.mesa;
     }
     public void addPedido(Pedido p, Cozinha cozinha){
         this.listaPedidos.add(p);

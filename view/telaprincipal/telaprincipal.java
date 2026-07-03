@@ -11,6 +11,7 @@ import com.mycompany.sstema.restaurante.*;
  */
 public class telaprincipal extends javax.swing.JFrame {
     private MeusClientes meusClientes;
+    private MinhasMesas minhasMesas;
     private Tablet tablet;
     private Cozinha cozinha;
     private Cliente clienteAtual;
@@ -27,6 +28,7 @@ public class telaprincipal extends javax.swing.JFrame {
         this.meusClientes = new MeusClientes();
         this.cozinha = new Cozinha();
         this.tablet = new Tablet();
+        this.minhasMesas = new MinhasMesas();
     }
 
     /**
@@ -42,6 +44,7 @@ public class telaprincipal extends javax.swing.JFrame {
         btnclickcliente = new javax.swing.JButton();
         btnclickproduto = new javax.swing.JButton();
         btnclickPedido = new javax.swing.JButton();
+        btnLogin = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(0, 0, 0));
@@ -62,6 +65,10 @@ public class telaprincipal extends javax.swing.JFrame {
         btnclickPedido.setText("Fazer pedido");
         btnclickPedido.addActionListener(this::btnclickPedidoActionPerformed);
 
+        btnLogin.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        btnLogin.setText("Login");
+        btnLogin.addActionListener(this::btnLoginActionPerformed);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -77,7 +84,10 @@ public class telaprincipal extends javax.swing.JFrame {
                             .addComponent(btnclickPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(btnclickproduto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnclickcliente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                                .addComponent(btnclickcliente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(373, 373, 373)
+                        .addComponent(btnLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(309, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -91,7 +101,9 @@ public class telaprincipal extends javax.swing.JFrame {
                 .addComponent(btnclickproduto)
                 .addGap(18, 18, 18)
                 .addComponent(btnclickPedido)
-                .addContainerGap(129, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(btnLogin)
+                .addContainerGap(79, Short.MAX_VALUE))
         );
 
         pack();
@@ -119,7 +131,7 @@ javax.swing.JOptionPane.showMessageDialog(this, "Tela Principal recebeu o client
     }//GEN-LAST:event_btnclickprodutoActionPerformed
 
     private void btnclickPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnclickPedidoActionPerformed
-        Loginform telaLogin = new Loginform(this,true,this.meusClientes,this.clienteAtual);
+        Loginform telaLogin = new Loginform(this,true,this.meusClientes,this.clienteAtual,minhasMesas);
         telaLogin.setLocationRelativeTo(this);
         telaLogin.setVisible(true);
         if (clienteAtual != null){
@@ -130,6 +142,12 @@ javax.swing.JOptionPane.showMessageDialog(this, "Tela Principal recebeu o client
             clienteAtual.addPedido(pedidoAtual,this.cozinha);
         }
     }//GEN-LAST:event_btnclickPedidoActionPerformed
+
+    private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
+         Loginform telaLogin = new Loginform(this,true,this.meusClientes,this.clienteAtual, minhasMesas);
+        telaLogin.setLocationRelativeTo(this);
+        telaLogin.setVisible(true);
+    }//GEN-LAST:event_btnLoginActionPerformed
 
     /**
      * @param args the command line arguments
@@ -157,6 +175,7 @@ javax.swing.JOptionPane.showMessageDialog(this, "Tela Principal recebeu o client
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnLogin;
     private javax.swing.JButton btnclickPedido;
     private javax.swing.JButton btnclickcliente;
     private javax.swing.JButton btnclickproduto;

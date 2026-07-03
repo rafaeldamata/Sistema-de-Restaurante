@@ -1,8 +1,11 @@
 package com.mycompany.sstema.restaurante.view.telaprincipal;
 import com.mycompany.sstema.restaurante.MeusClientes;
 import com.mycompany.sstema.restaurante.Cliente;
+import com.mycompany.sstema.restaurante.MinhasMesas;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
+import java.awt.Image;
+import javax.swing.ImageIcon;
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/AWTForms/Dialog.java to edit this template
@@ -16,14 +19,27 @@ import javax.swing.JOptionPane;
 public class Loginform extends javax.swing.JDialog {
     private MeusClientes meusClientes;
     private Cliente clienteAtual;
+    private MinhasMesas minhasMesas;
     /**
      * Creates new form Loginform
      */
-    public Loginform(java.awt.Frame parent, boolean modal, MeusClientes meusClientes, Cliente clienteAtual) {
+    public Loginform(java.awt.Frame parent, boolean modal, MeusClientes meusClientes, Cliente clienteAtual, MinhasMesas minhasMesas) {
         super(parent, modal);
         initComponents();
+        this.getContentPane().setBackground(java.awt.Color.white);
+        ImageIcon icon = new ImageIcon("C:/Users/rafin/Downloads/Logo Ki Gaúcho_page-0001.jpg");
+
+        Image imagem = icon.getImage().getScaledInstance(
+        250,
+        250,
+        Image.SCALE_SMOOTH);
+
+        lblLogo.setIcon(new ImageIcon(imagem));
+        System.out.println("Largura: " + icon.getIconWidth());
+        System.out.println("Altura: " + icon.getIconHeight());
         this.meusClientes = meusClientes;
         this.clienteAtual = clienteAtual;
+        this.minhasMesas = minhasMesas;
     }
 
     /**
@@ -34,34 +50,37 @@ public class Loginform extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        labelKigaucho = new javax.swing.JLabel();
         labelCpf = new javax.swing.JLabel();
         txtCpf = new javax.swing.JTextField();
         btnLogin = new javax.swing.JButton();
+        lblLogo = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
 
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 closeDialog(evt);
             }
         });
-        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        labelKigaucho.setFont(new java.awt.Font("Gill Sans Ultra Bold", 0, 24)); // NOI18N
-        labelKigaucho.setForeground(new java.awt.Color(255, 51, 51));
-        labelKigaucho.setText("RESTAURANTE KIGAÚCHO");
-        add(labelKigaucho, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 30, -1, -1));
-
-        labelCpf.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        labelCpf.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         labelCpf.setText("CPF:");
-        add(labelCpf, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 100, -1, -1));
+        getContentPane().add(labelCpf, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 90, -1, -1));
 
+        txtCpf.setBackground(new java.awt.Color(204, 204, 204));
         txtCpf.setText("Digite o seu cpf");
-        add(txtCpf, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 140, 140, 30));
+        getContentPane().add(txtCpf, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 130, 140, 30));
 
-        btnLogin.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        btnLogin.setBackground(new java.awt.Color(204, 204, 204));
+        btnLogin.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btnLogin.setText("Fazer login");
         btnLogin.addActionListener(this::btnLoginActionPerformed);
-        add(btnLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 200, -1, -1));
+        getContentPane().add(btnLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 210, -1, -1));
+        getContentPane().add(lblLogo, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 40, 250, 250));
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
+        jLabel1.setText("Login do Cliente");
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 40, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -80,10 +99,17 @@ public class Loginform extends javax.swing.JDialog {
         String cpf = txtCpf.getText();
         
         this.clienteAtual = this.meusClientes.encontrarCliente(cpf);
-        if (this.clienteAtual == null)
+        if (this.clienteAtual == null){
             javax.swing.JOptionPane.showMessageDialog(this, "Cliente não encontrado!","Erro de Login",JOptionPane.ERROR_MESSAGE);
-        else
+        }
+        else{
             JOptionPane.showMessageDialog(this,"Login realizado com sucesso!","Sucesso", JOptionPane.INFORMATION_MESSAGE);
+            TelaCliente telaCliente = new TelaCliente(clienteAtual, minhasMesas);
+            telaCliente.setLocationRelativeTo(this);
+            telaCliente.setVisible(true);
+            setVisible(false);
+            dispose();
+        }
         setVisible(false);
         dispose();
     }//GEN-LAST:event_btnLoginActionPerformed
@@ -94,7 +120,7 @@ public class Loginform extends javax.swing.JDialog {
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                Loginform dialog = new Loginform(new java.awt.Frame(), true,null,null);
+                Loginform dialog = new Loginform(new java.awt.Frame(), true,null,null, new MinhasMesas());
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     public void windowClosing(java.awt.event.WindowEvent e) {
                         System.exit(0);
@@ -108,8 +134,9 @@ public class Loginform extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLogin;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel labelCpf;
-    private javax.swing.JLabel labelKigaucho;
+    private javax.swing.JLabel lblLogo;
     private javax.swing.JTextField txtCpf;
     // End of variables declaration//GEN-END:variables
 }
