@@ -7,6 +7,7 @@ import com.mycompany.sstema.restaurante.ItemCardapio;
 import com.mycompany.sstema.restaurante.Tablet;
 import com.mycompany.sstema.restaurante.Pedido;
 import com.mycompany.sstema.restaurante.ItemPedido;
+
 import java.util.ArrayList;
 
 /**
@@ -21,13 +22,15 @@ private ArrayList<javax.swing.JCheckBox> checkBoxes = new java.util.ArrayList<>(
 private ArrayList<javax.swing.JSpinner> spinnersQuantidade = new java.util.ArrayList<>();
 private Tablet tablet;
 private Pedido pedido;
+private TelaCliente telaCliente;
+
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(TelaPedido.class.getName());
 
     /**
      * Creates new form TelaPedido
      */
-    public TelaPedido(Tablet tablet, Pedido pedido) {
+    public TelaPedido(Tablet tablet, Pedido pedido, TelaCliente telaCliente) {
         initComponents();
         scrollPane.setViewportView(painelCardapio); 
         painelCardapio.setLayout(new javax.swing.BoxLayout(painelCardapio, javax.swing.BoxLayout.Y_AXIS));
@@ -36,58 +39,92 @@ private Pedido pedido;
         painelCardapio.setBackground(java.awt.Color.WHITE);
         this.tablet = tablet;
         this.pedido = pedido;
+        this.telaCliente = telaCliente;
         this.construirMenuDinamico();
     }
 
     public final void construirMenuDinamico() {
-    // 1. Limpa o painel caso já tenha algo desenhado nele
+    // 1. Limpa o painel e as listas de controle
     painelCardapio.removeAll(); 
     itensExibidos.clear();
     checkBoxes.clear();
     spinnersQuantidade.clear();
+    
     ArrayList<ItemCardapio> listaProdutos = tablet.getListaProdutos();
-    // 2. Um laço "for" que vai passar por cada item cadastrado no seu Tablet
+    
+    // --- SEÇÃO DE COMIDAS ---
+    // Adiciona o título da seção de comidas
+    javax.swing.JLabel lblComidas = new javax.swing.JLabel("--- COMIDAS ---");
+    lblComidas.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 14));
+    lblComidas.setForeground(java.awt.Color.DARK_GRAY);
+    lblComidas.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 5, 0));
+    painelCardapio.add(lblComidas);
+    
     for (ItemCardapio item : listaProdutos) {
-        
-        // Criamos uma "linha" horizontal invisível para organizar o item atual
-        javax.swing.JPanel linhaItem = new javax.swing.JPanel(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
-        
-        // Criamos o Checkbox com o nome do prato e o preço
-        String texto = item.getNome() + " - R$ " + item.getPreco();
-        javax.swing.JCheckBox chk = new javax.swing.JCheckBox(texto);
-        
-        // Criamos o seletor de quantidade (mínimo 1, máximo 99)
-        javax.swing.SpinnerNumberModel modeloNumero = new javax.swing.SpinnerNumberModel(1, 1, 99, 1);
-        javax.swing.JSpinner spinner = new javax.swing.JSpinner(modeloNumero);
-        
-        spinner.setPreferredSize(new java.awt.Dimension(50, 25));
-        
-        // Por padrão, deixamos o seletor de quantidade desativado
-        spinner.setEnabled(false); 
-        
-        // Truque de mestre: Se o cliente marcar o Checkbox, ativa o seletor. Se desmarcar, desativa.
-        chk.addActionListener(e -> {
-            spinner.setEnabled(chk.isSelected());
-        });
-        
-        // Colocamos o Checkbox, o texto "Qtd:" e o Seletor dentro da linha horizontal
-        linhaItem.add(chk);
-        linhaItem.add(new javax.swing.JLabel(" Qtd: "));
-        linhaItem.add(spinner);
-        
-        // Colocamos a linha horizontal dentro do nosso painel vertical principal
-        painelCardapio.add(linhaItem);
-        
-        // Guardamos as referências nas nossas listas invisíveis (Passo 2) para consultar depois
-        itensExibidos.add(item);
-        checkBoxes.add(chk);
-        spinnersQuantidade.add(spinner);
+        // Verifica se o item herda ou é uma instância de Comida
+        if (item instanceof com.mycompany.sstema.restaurante.Comida) {
+            adicionarItemAoPainel(item);
+        }
     }
     
-    // Dizemos ao Swing para atualizar a tela e mostrar os novos componentes desenhados
+    // --- SEÇÃO DE BEBIDAS ---
+    // Adiciona o título da seção de bebidas
+    javax.swing.JLabel lblBebidas = new javax.swing.JLabel("--- BEBIDAS ---");
+    lblBebidas.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 14));
+    lblBebidas.setForeground(java.awt.Color.DARK_GRAY);
+    lblBebidas.setBorder(javax.swing.BorderFactory.createEmptyBorder(15, 10, 5, 0));
+    painelCardapio.add(lblBebidas);
+    
+    for (ItemCardapio item : listaProdutos) {
+        // Verifica se o item herda ou é uma instância de Bebida
+        if (item instanceof com.mycompany.sstema.restaurante.Bebida) {
+            adicionarItemAoPainel(item);
+        }
+    }
+    
+    // Atualiza a interface gráfica do Swing para renderizar as novidades
     painelCardapio.revalidate();
     painelCardapio.repaint();
 }
+
+/**
+ * Método auxiliar criado para reaproveitar a lógica de desenho de cada linha
+ * sem precisar duplicar o código do Checkbox e do Spinner.
+ */
+private void adicionarItemAoPainel(ItemCardapio item) {
+    // Cria uma "linha" horizontal para organizar o item atual
+    javax.swing.JPanel linhaItem = new javax.swing.JPanel(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+    
+    // Cria o Checkbox com o nome do prato e o preço
+    String texto = item.getNome() + " - R$ " + item.getPreco();
+    javax.swing.JCheckBox chk = new javax.swing.JCheckBox(texto);
+    
+    // Cria o seletor de quantidade (mínimo 1, máximo 99)
+    javax.swing.SpinnerNumberModel modeloNumero = new javax.swing.SpinnerNumberModel(1, 1, 99, 1);
+    javax.swing.JSpinner spinner = new javax.swing.JSpinner(modeloNumero);
+    spinner.setPreferredSize(new java.awt.Dimension(50, 25));
+    spinner.setEnabled(false); 
+    
+    // Listener para ativar/desativar a quantidade baseado no checkbox
+    chk.addActionListener(e -> {
+        spinner.setEnabled(chk.isSelected());
+    });
+    
+    // Adiciona os componentes na linha
+    linhaItem.add(chk);
+    linhaItem.add(new javax.swing.JLabel(" Qtd: "));
+    linhaItem.add(spinner);
+    
+    // Coloca a linha dentro do painel principal
+    painelCardapio.add(linhaItem);
+    
+    // Guarda os elementos de forma sincronizada para o fechamento do pedido continuar funcionando
+    itensExibidos.add(item);
+    checkBoxes.add(chk);
+    spinnersQuantidade.add(spinner);
+}
+
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -105,16 +142,15 @@ private Pedido pedido;
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel1.setFont(new java.awt.Font("Gill Sans Ultra Bold", 0, 24)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 51, 51));
-        jLabel1.setText("PEDIDO");
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 22)); // NOI18N
+        jLabel1.setText("Tela de Pedidos");
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 40, -1, -1));
         getContentPane().add(scrollPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 90, 450, 180));
 
         painelCardapio.setLayout(new javax.swing.BoxLayout(painelCardapio, javax.swing.BoxLayout.Y_AXIS));
         getContentPane().add(painelCardapio, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 120, 360, 120));
 
-        btnFecharpedido.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        btnFecharpedido.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btnFecharpedido.setText("Fechar Pedido");
         btnFecharpedido.addActionListener(this::btnFecharpedidoActionPerformed);
         getContentPane().add(btnFecharpedido, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 310, -1, -1));
@@ -144,6 +180,7 @@ private Pedido pedido;
             // 4. Adicionamos esse item dentro do ArrayList do seu objeto novoPedido
             // (Assumindo que sua classe Pedido tenha um método para adicionar itens, ex: adicionarItem)
             pedido.addItem(itemPedido); 
+            
         }
     }
 
@@ -169,6 +206,7 @@ private Pedido pedido;
 
     // Exibe a caixinha de sucesso direta para o usuário
     javax.swing.JOptionPane.showMessageDialog(this, mensagemFinal);
+    telaCliente.atualizarListaDePedidos(this.pedido);
     
     setVisible(false);
     dispose();
@@ -203,7 +241,7 @@ java.awt.EventQueue.invokeLater(() -> {
     Tablet tabletTeste = new Tablet();
     Pedido pedidoTeste = new Pedido();
     // 2. Passamos a variável para dentro do construtor da tela
-    new TelaPedido(tabletTeste,pedidoTeste).setVisible(true);
+    new TelaPedido(tabletTeste,pedidoTeste,null).setVisible(true);
 });
     }
 

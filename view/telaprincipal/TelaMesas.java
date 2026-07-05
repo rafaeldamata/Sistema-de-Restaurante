@@ -1,10 +1,13 @@
 package com.mycompany.sstema.restaurante.view.telaprincipal;
 import com.mycompany.sstema.restaurante.Mesa;
 import com.mycompany.sstema.restaurante.MinhasMesas;
+import com.mycompany.sstema.restaurante.MeusClientes;
+import com.mycompany.sstema.restaurante.Cliente;
 import java.awt.Color;
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JOptionPane;
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
@@ -16,19 +19,40 @@ import javax.swing.JPanel;
  */
 public class TelaMesas extends javax.swing.JFrame {
     private MinhasMesas minhasMesas;
-    private Mesa mesa;
+    private Cliente clienteAtivo;
+    private TelaCliente telaCliente;
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(TelaMesas.class.getName());
 
     /**
      * Creates new form TelaMesas
      */
-    public TelaMesas(MinhasMesas minhasMesas) {
-        initComponents();
-        this.minhasMesas = minhasMesas;
-        for (int i = 1; i <= 20; i++) {
+        public TelaMesas(MinhasMesas minhasMesas, Cliente clienteAtivo, TelaCliente telaCliente) {
+            initComponents();
+            setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+            this.minhasMesas = minhasMesas;
+            this.clienteAtivo = clienteAtivo;
+            this.telaCliente = telaCliente;
+            this.mostrarMesas();
+
+        }
+private void mostrarMesas(){
+    int clientes;
+    for (int i = 1; i <= 20; i++) {
+            int id = i;
+            Mesa m;
             JPanel mesa = new JPanel();
             mesa.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-            mesa.setBackground(Color.GREEN);
+            m = this.minhasMesas.encontarMesa(id);
+            if (m == null)
+                mesa.setBackground(Color.GREEN);
+            else{
+                clientes = m.contarClientes(m);
+                if (clientes == 6)
+                    mesa.setBackground(Color.RED);
+                else
+                    mesa.setBackground(Color.GREEN);
+                    }
+            
 
             JLabel lbl = new JLabel("Mesa " + i);
 
@@ -36,8 +60,7 @@ public class TelaMesas extends javax.swing.JFrame {
 
             pnlMesas.add(mesa);
         }
-    }
-
+}
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -51,74 +74,113 @@ public class TelaMesas extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         pnlMesas = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        txtMesa = new javax.swing.JTextField();
         btnConfirmar = new javax.swing.JButton();
+        txtMesa = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(1000, 700));
+
+        pnlPrincipal.setPreferredSize(new java.awt.Dimension(1000, 700));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 22)); // NOI18N
         jLabel1.setText("Escolha a sua Mesa");
 
-        pnlMesas.setLayout(new java.awt.GridLayout(5, 4, 10, 10));
-
-        javax.swing.GroupLayout pnlPrincipalLayout = new javax.swing.GroupLayout(pnlPrincipal);
-        pnlPrincipal.setLayout(pnlPrincipalLayout);
-        pnlPrincipalLayout.setHorizontalGroup(
-            pnlPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlPrincipalLayout.createSequentialGroup()
-                .addGap(232, 232, 232)
-                .addComponent(jLabel1)
-                .addContainerGap(242, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlPrincipalLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(pnlMesas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(41, 41, 41))
-        );
-        pnlPrincipalLayout.setVerticalGroup(
-            pnlPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlPrincipalLayout.createSequentialGroup()
-                .addGap(31, 31, 31)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
-                .addComponent(pnlMesas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(27, 27, 27))
-        );
+        pnlMesas.setPreferredSize(new java.awt.Dimension(600, 500));
+        pnlMesas.setLayout(new java.awt.GridLayout(5, 4, 20, 20));
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel2.setText("Mesa:");
 
         btnConfirmar.setBackground(new java.awt.Color(204, 204, 204));
         btnConfirmar.setText("Confirmar");
+        btnConfirmar.addActionListener(this::btnConfirmarActionPerformed);
+
+        javax.swing.GroupLayout pnlPrincipalLayout = new javax.swing.GroupLayout(pnlPrincipal);
+        pnlPrincipal.setLayout(pnlPrincipalLayout);
+        pnlPrincipalLayout.setHorizontalGroup(
+            pnlPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlPrincipalLayout.createSequentialGroup()
+                .addGroup(pnlPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlPrincipalLayout.createSequentialGroup()
+                        .addGap(232, 232, 232)
+                        .addComponent(jLabel1))
+                    .addGroup(pnlPrincipalLayout.createSequentialGroup()
+                        .addGap(122, 122, 122)
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtMesa, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(116, 116, 116)
+                        .addComponent(btnConfirmar))
+                    .addGroup(pnlPrincipalLayout.createSequentialGroup()
+                        .addGap(40, 40, 40)
+                        .addComponent(pnlMesas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(167, Short.MAX_VALUE))
+        );
+        pnlPrincipalLayout.setVerticalGroup(
+            pnlPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlPrincipalLayout.createSequentialGroup()
+                .addGap(31, 31, 31)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 62, Short.MAX_VALUE)
+                .addGroup(pnlPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnConfirmar)
+                    .addComponent(jLabel2)
+                    .addComponent(txtMesa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(32, 32, 32)
+                .addComponent(pnlMesas, javax.swing.GroupLayout.PREFERRED_SIZE, 342, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(180, 180, 180))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pnlPrincipal, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(169, 169, 169)
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(txtMesa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(49, 49, 49)
-                .addComponent(btnConfirmar)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(pnlPrincipal, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 807, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(pnlPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 180, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(txtMesa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnConfirmar))
-                .addGap(47, 47, 47))
+                .addContainerGap(76, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmarActionPerformed
+        Mesa mesa;
+        int clientes;
+        int id = Integer.parseInt(txtMesa.getText());
+        mesa = minhasMesas.encontarMesa(id);
+        if (mesa == null){
+            mesa = new Mesa(id);
+            mesa.addCliente(clienteAtivo);
+            clienteAtivo.setMesa(mesa);
+            minhasMesas.addMesa(mesa);
+            JOptionPane.showMessageDialog(this,"Mesa escolhida com sucesso!","Sucesso", JOptionPane.INFORMATION_MESSAGE);
+            telaCliente.atualizarNumeroDaMesa();
+            dispose();
+        }
+        else{
+            clientes = mesa.contarClientes(mesa);
+            if (clientes < 6){
+                mesa.addCliente(clienteAtivo);
+                clienteAtivo.setMesa(mesa);
+                JOptionPane.showMessageDialog(this,"Mesa escolhida com sucesso!","Sucesso", JOptionPane.INFORMATION_MESSAGE);
+                telaCliente.atualizarNumeroDaMesa();
+                dispose();
+            }
+            else
+                javax.swing.JOptionPane.showMessageDialog(this, "A mesa está OCUPADA!","Erro ao escolher mesa",JOptionPane.ERROR_MESSAGE);
+        
+        
+            
+            
+        }
+               
+        
+    }//GEN-LAST:event_btnConfirmarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -142,7 +204,12 @@ public class TelaMesas extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new TelaMesas(new MinhasMesas()).setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> {
+    MeusClientes listaClientes = new MeusClientes(); // Se você precisar criar a lista aqui
+    Cliente clientePreenchido = new Cliente("Nome", "CPF", "Telefone", listaClientes);
+    
+    new TelaMesas(new MinhasMesas(), clientePreenchido,null).setVisible(true);
+});
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

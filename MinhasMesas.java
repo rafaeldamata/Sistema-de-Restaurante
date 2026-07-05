@@ -22,9 +22,9 @@ public class MinhasMesas {
     public void removerMesa(Mesa m){
         listaMesas.remove(m);
     }
-    public Mesa encontarMesa(Mesa mesa){
+    public Mesa encontarMesa(int id){
         for (Mesa m : listaMesas){
-            if (m.equals(mesa))
+            if (id == m.getId())
                 return m;
         }
         return null;

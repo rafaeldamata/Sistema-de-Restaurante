@@ -1,7 +1,12 @@
 package com.mycompany.sstema.restaurante.view.telaprincipal;
 import com.mycompany.sstema.restaurante.Cliente;
 import com.mycompany.sstema.restaurante.Mesa;
+import com.mycompany.sstema.restaurante.Tablet;
+import com.mycompany.sstema.restaurante.Cozinha;
+import com.mycompany.sstema.restaurante.ItemPedido;
+import com.mycompany.sstema.restaurante.Pedido;
 import com.mycompany.sstema.restaurante.MinhasMesas;
+import java.util.ArrayList;
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
@@ -15,15 +20,20 @@ import com.mycompany.sstema.restaurante.MinhasMesas;
 public class TelaCliente extends javax.swing.JFrame {
     private Cliente clienteAtual;
     private MinhasMesas minhasMesas;
+    private Tablet tablet;
+    private Cozinha cozinha;
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(TelaCliente.class.getName());
 
     /**
      * Creates new form TelaCliente
      */
-    public TelaCliente(Cliente cliente, MinhasMesas minhasMesas) {
+    public TelaCliente(Cliente cliente, MinhasMesas minhasMesas, Tablet tablet, Cozinha cozinha) {
         initComponents();
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         this.clienteAtual = cliente;
         this.minhasMesas = minhasMesas;
+        this.tablet = tablet;
+        this.cozinha = cozinha;
         
         lblNome.setText(clienteAtual.getNome());
         lblCpf.setText(clienteAtual.getCPF());
@@ -31,8 +41,75 @@ public class TelaCliente extends javax.swing.JFrame {
         lblEmail.setText(clienteAtual.getEmail());
         if (clienteAtual.getMesa() != null)
             lblMesa.setText("" + clienteAtual.getMesa().getId());
+        this.atualizarListaDePedidos(clienteAtual.getListadePedidos());
     }
 
+private void atualizarListaDePedidos(ArrayList<Pedido> listaPedidos) {
+    // 1. Pega o modelo da tabela (Substitua 'tabelaPedidos' pelo nome real da sua variável JTable)
+    javax.swing.table.DefaultTableModel modelo = (javax.swing.table.DefaultTableModel) tabelaPedidos.getModel();
+    
+    // 2. Limpa todas as linhas antigas da tabela para não duplicar os dados
+    modelo.setRowCount(0);
+    
+    // 3. Verifica se o cliente ativo tem um pedido válido
+    if (this.clienteAtual != null && listaPedidos != null) {
+        
+        for (Pedido p : listaPedidos){
+        ArrayList<ItemPedido> itens = p.getPedido();
+        
+        // 4. Percorre a lista de itens inserindo os dados nas colunas correspondentes
+        for (ItemPedido item : itens) {
+            Object[] linha = new Object[] {
+                item.getItemCardapio().getNome(),             // Coluna 1: Produto
+                item.getQuantidade(),                         // Coluna 2: Quantidade
+                item.getPreco(),
+                p.getStatus(),
+                // Coluna 4: Status
+            };
+            
+            // Adiciona a linha fisicamente na JTable da tela
+            modelo.addRow(linha); 
+        }
+    }
+  }
+}
+    
+public void atualizarListaDePedidos(Pedido p) {
+    // 1. Pega o modelo da tabela (Substitua 'tabelaPedidos' pelo nome real da sua variável JTable)
+    javax.swing.table.DefaultTableModel modelo = (javax.swing.table.DefaultTableModel) tabelaPedidos.getModel();
+    
+    // 2. Limpa todas as linhas antigas da tabela para não duplicar os dados
+    
+    
+    // 3. Verifica se o cliente ativo tem um pedido válido
+    if (this.clienteAtual != null && p != null) {
+        
+        // Recupera a lista de itens do pedido do cliente
+        ArrayList<ItemPedido> itens = p.getPedido();
+        
+        // 4. Percorre a lista de itens inserindo os dados nas colunas correspondentes
+        for (ItemPedido item : itens) {
+            Object[] linha = new Object[] {
+                item.getItemCardapio().getNome(),             // Coluna 1: Produto
+                item.getQuantidade(),                         // Coluna 2: Quantidade
+                item.getPreco(),
+                p.getStatus(),
+                // Coluna 4: Status
+            };
+            
+            // Adiciona a linha fisicamente na JTable da tela
+            modelo.addRow(linha); 
+        }
+    }
+}
+    public void atualizarNumeroDaMesa() {
+    if (this.clienteAtual != null && this.clienteAtual.getMesa() != null) {
+        int numeroMesa = this.clienteAtual.getMesa().getId();
+        
+        // Altere "lblNumeroMesa" para o nome da sua Label/Texto que mostra a mesa na tela
+        lblMesa.setText("" + numeroMesa); 
+    }
+}
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -61,7 +138,7 @@ public class TelaCliente extends javax.swing.JFrame {
         btnClientesdaMesa = new javax.swing.JButton();
         LblPedido = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblPedidos = new javax.swing.JTable();
+        tabelaPedidos = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -97,6 +174,7 @@ public class TelaCliente extends javax.swing.JFrame {
         jSeparator1.setForeground(new java.awt.Color(51, 51, 51));
 
         btnNovoPedido.setText("Novo Pedido");
+        btnNovoPedido.addActionListener(this::btnNovoPedidoActionPerformed);
 
         btnRemoverPedido.setText("Remover Pedido");
 
@@ -110,7 +188,7 @@ public class TelaCliente extends javax.swing.JFrame {
         LblPedido.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         LblPedido.setText("Pedidos do Cliente");
 
-        tblPedidos.setModel(new javax.swing.table.DefaultTableModel(
+        tabelaPedidos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -121,7 +199,7 @@ public class TelaCliente extends javax.swing.JFrame {
                 "Produto", "Quantidade", "Preço", "Status"
             }
         ));
-        jScrollPane1.setViewportView(tblPedidos);
+        jScrollPane1.setViewportView(tabelaPedidos);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -228,10 +306,18 @@ public class TelaCliente extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnEscolherMesaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEscolherMesaActionPerformed
-        TelaMesas telaMesa = new TelaMesas(minhasMesas);
+        TelaMesas telaMesa = new TelaMesas(minhasMesas,clienteAtual,this);
         telaMesa.setLocationRelativeTo(this);
         telaMesa.setVisible(true);
     }//GEN-LAST:event_btnEscolherMesaActionPerformed
+
+    private void btnNovoPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoPedidoActionPerformed
+        Pedido p = new Pedido();
+        TelaPedido telaPedido = new TelaPedido(tablet,p,this);
+        telaPedido.setLocationRelativeTo(this);
+        telaPedido.setVisible(true);
+        clienteAtual.addPedido(p,cozinha);
+    }//GEN-LAST:event_btnNovoPedidoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -258,6 +344,6 @@ public class TelaCliente extends javax.swing.JFrame {
     private javax.swing.JLabel lblMesa;
     private javax.swing.JLabel lblNome;
     private javax.swing.JLabel lblTitulo;
-    private javax.swing.JTable tblPedidos;
+    private javax.swing.JTable tabelaPedidos;
     // End of variables declaration//GEN-END:variables
 }

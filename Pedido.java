@@ -13,12 +13,16 @@ public class Pedido {
 
     protected ArrayList<ItemPedido> pedido;
     protected String status;
+    
     public Pedido(){
         this.pedido = new ArrayList<>();
         this.status = "EM ABERTO";
     }
     public void setStatus(String status){
         this.status = status;
+    }
+    public String getStatus(){
+        return this.status;
     }
     public void addItem(ItemPedido item){
         this.pedido.add(item);
@@ -29,9 +33,8 @@ public class Pedido {
     public ArrayList<ItemPedido> getPedido(){
         return this.pedido;
     }
-    public ArrayList<ItemPedido> getItemPedido(){
-        return this.pedido;
-    }
+   
+    
     public float valorPedido(){
         float total = 0;
         for (ItemPedido item : this.pedido){

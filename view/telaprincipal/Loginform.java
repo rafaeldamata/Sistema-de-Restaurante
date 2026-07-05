@@ -1,7 +1,9 @@
 package com.mycompany.sstema.restaurante.view.telaprincipal;
 import com.mycompany.sstema.restaurante.MeusClientes;
 import com.mycompany.sstema.restaurante.Cliente;
+import com.mycompany.sstema.restaurante.Cozinha;
 import com.mycompany.sstema.restaurante.MinhasMesas;
+import com.mycompany.sstema.restaurante.Tablet;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import java.awt.Image;
@@ -20,10 +22,12 @@ public class Loginform extends javax.swing.JDialog {
     private MeusClientes meusClientes;
     private Cliente clienteAtual;
     private MinhasMesas minhasMesas;
+    private Tablet tablet;
+    private Cozinha cozinha;
     /**
      * Creates new form Loginform
      */
-    public Loginform(java.awt.Frame parent, boolean modal, MeusClientes meusClientes, Cliente clienteAtual, MinhasMesas minhasMesas) {
+    public Loginform(java.awt.Frame parent, boolean modal, MeusClientes meusClientes, Cliente clienteAtual, MinhasMesas minhasMesas, Tablet tablet, Cozinha cozinha) {
         super(parent, modal);
         initComponents();
         this.getContentPane().setBackground(java.awt.Color.white);
@@ -35,11 +39,12 @@ public class Loginform extends javax.swing.JDialog {
         Image.SCALE_SMOOTH);
 
         lblLogo.setIcon(new ImageIcon(imagem));
-        System.out.println("Largura: " + icon.getIconWidth());
-        System.out.println("Altura: " + icon.getIconHeight());
+        
         this.meusClientes = meusClientes;
         this.clienteAtual = clienteAtual;
         this.minhasMesas = minhasMesas;
+        this.tablet = tablet;
+        this.cozinha = cozinha;
     }
 
     /**
@@ -104,7 +109,7 @@ public class Loginform extends javax.swing.JDialog {
         }
         else{
             JOptionPane.showMessageDialog(this,"Login realizado com sucesso!","Sucesso", JOptionPane.INFORMATION_MESSAGE);
-            TelaCliente telaCliente = new TelaCliente(clienteAtual, minhasMesas);
+            TelaCliente telaCliente = new TelaCliente(clienteAtual, minhasMesas,tablet,cozinha);
             telaCliente.setLocationRelativeTo(this);
             telaCliente.setVisible(true);
             setVisible(false);
@@ -120,7 +125,7 @@ public class Loginform extends javax.swing.JDialog {
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                Loginform dialog = new Loginform(new java.awt.Frame(), true,null,null, new MinhasMesas());
+                Loginform dialog = new Loginform(new java.awt.Frame(), true,null,null, new MinhasMesas(),new Tablet(),new Cozinha());
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     public void windowClosing(java.awt.event.WindowEvent e) {
                         System.exit(0);

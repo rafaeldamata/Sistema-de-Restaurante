@@ -30,6 +30,12 @@ public class Mesa {
     public void removerCliente(Cliente c){
         listaClientes.remove(c);
     }
+    public int contarClientes(Mesa m){
+        int total = 0;
+        for (Cliente c : listaClientes)
+            total++;
+        return total;
+    }
     /**
      * @param args the command line arguments
      */

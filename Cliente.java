@@ -26,11 +26,14 @@ public class Cliente {
         this.email = email;
         this.bonus = 0f;
         this.conta = new Conta();
-        this.listaPedidos = new ArrayList<Pedido>();
+        this.listaPedidos = new ArrayList<>();
         meusCli.addCliente(this);
      }
     public String getCPF(){
         return this.cpf;
+    }
+    public ArrayList<Pedido> getListadePedidos(){
+        return this.listaPedidos;
     }
     public String getNome(){
         return this.nome;
@@ -52,7 +55,9 @@ public class Cliente {
     public float fecharConta(){
         return this.conta.getValorTotal();
     }
-
+    public void setMesa(Mesa mesa){
+        this.mesa = mesa;
+    }
     public boolean pagar(){
 
         return this.conta.pagar(this.pagamento);
