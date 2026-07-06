@@ -4,6 +4,8 @@
  */
 package com.mycompany.sstema.restaurante.view.telaprincipal;
 import com.mycompany.sstema.restaurante.*;
+import java.awt.Image;
+import javax.swing.ImageIcon;
 /**
  *
  * @author rafin
@@ -17,7 +19,15 @@ public class CadastroClienteform extends javax.swing.JDialog {
     public CadastroClienteform(java.awt.Frame parent, boolean modal, MeusClientes meusClientes) {
         super(parent, modal);
         initComponents();
-        this.getContentPane().setBackground(java.awt.Color.BLACK);
+        this.getContentPane().setBackground(java.awt.Color.WHITE);
+        ImageIcon icon = new ImageIcon("C:/Users/rafin/Downloads/Logo Ki Gaúcho_page-0001.jpg");
+
+        Image imagem = icon.getImage().getScaledInstance(
+        250,
+        250,
+        Image.SCALE_SMOOTH);
+
+        lblLogo.setIcon(new ImageIcon(imagem));
         this.meusClientes = meusClientes;
         this.clienteNovo = null;
     }
@@ -36,49 +46,49 @@ public class CadastroClienteform extends javax.swing.JDialog {
         jTxtNome = new javax.swing.JTextField();
         jTxtCPF = new javax.swing.JTextField();
         jTxtemail = new javax.swing.JTextField();
-        jLabelkigaucho = new javax.swing.JLabel();
         jButtonSalvarcadastro = new javax.swing.JButton();
+        lblLogo = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
 
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 closeDialog(evt);
             }
         });
-        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabelNome.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabelNome.setForeground(new java.awt.Color(242, 242, 242));
+        jLabelNome.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         jLabelNome.setText("Nome:");
-        add(jLabelNome, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 80, 60, 30));
+        getContentPane().add(jLabelNome, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 80, 60, 30));
 
-        jLabelcpf.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabelcpf.setForeground(new java.awt.Color(242, 242, 242));
+        jLabelcpf.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         jLabelcpf.setText("CPF:");
-        add(jLabelcpf, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 130, 60, 20));
+        getContentPane().add(jLabelcpf, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 150, 60, 20));
 
-        jLabelemail.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabelemail.setForeground(new java.awt.Color(242, 242, 242));
+        jLabelemail.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         jLabelemail.setText("E-mail:");
-        add(jLabelemail, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 170, -1, -1));
+        getContentPane().add(jLabelemail, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 210, -1, -1));
 
-        jTxtNome.setText("ex: \"reinaldo\"");
-        add(jTxtNome, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 90, -1, -1));
+        jTxtNome.setBackground(new java.awt.Color(204, 204, 204));
+        jTxtNome.addActionListener(this::jTxtNomeActionPerformed);
+        getContentPane().add(jTxtNome, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 90, 210, -1));
 
-        jTxtCPF.setText("ex: 111.111.111-11");
-        add(jTxtCPF, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 130, -1, -1));
+        jTxtCPF.setBackground(new java.awt.Color(204, 204, 204));
+        jTxtCPF.addActionListener(this::jTxtCPFActionPerformed);
+        getContentPane().add(jTxtCPF, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 150, 210, -1));
 
-        jTxtemail.setText("ex: aleatorio@gmail.com");
-        add(jTxtemail, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 170, -1, -1));
+        jTxtemail.setBackground(new java.awt.Color(204, 204, 204));
+        getContentPane().add(jTxtemail, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 210, 210, -1));
 
-        jLabelkigaucho.setFont(new java.awt.Font("Gill Sans Ultra Bold", 0, 24)); // NOI18N
-        jLabelkigaucho.setForeground(new java.awt.Color(255, 51, 51));
-        jLabelkigaucho.setText("RESTAURANTE KIGAÚCHO");
-        add(jLabelkigaucho, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 30, -1, -1));
-
-        jButtonSalvarcadastro.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jButtonSalvarcadastro.setText("Salvar cadastro");
+        jButtonSalvarcadastro.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jButtonSalvarcadastro.setText("Registrar");
         jButtonSalvarcadastro.addActionListener(this::jButtonSalvarcadastroActionPerformed);
-        add(jButtonSalvarcadastro, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 210, -1, -1));
+        getContentPane().add(jButtonSalvarcadastro, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 270, -1, -1));
+        getContentPane().add(lblLogo, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 70, 220, 220));
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 22)); // NOI18N
+        jLabel1.setText("Cadastro do Cliente");
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 30, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -106,6 +116,14 @@ public class CadastroClienteform extends javax.swing.JDialog {
         this.dispose();
     }//GEN-LAST:event_jButtonSalvarcadastroActionPerformed
 
+    private void jTxtNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTxtNomeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTxtNomeActionPerformed
+
+    private void jTxtCPFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTxtCPFActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTxtCPFActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -126,12 +144,13 @@ public class CadastroClienteform extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonSalvarcadastro;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabelNome;
     private javax.swing.JLabel jLabelcpf;
     private javax.swing.JLabel jLabelemail;
-    private javax.swing.JLabel jLabelkigaucho;
     private javax.swing.JTextField jTxtCPF;
     private javax.swing.JTextField jTxtNome;
     private javax.swing.JTextField jTxtemail;
+    private javax.swing.JLabel lblLogo;
     // End of variables declaration//GEN-END:variables
 }

@@ -253,6 +253,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Remover Pedido"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnRemoverPedidoActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnFecharConta">
       <Properties>
@@ -271,6 +274,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Clientes da Mesa"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnClientesdaMesaActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="LblPedido">
       <Properties>

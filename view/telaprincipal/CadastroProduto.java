@@ -64,12 +64,8 @@ public class CadastroProduto extends javax.swing.JDialog {
         jLabelprecoproduto.setForeground(new java.awt.Color(242, 242, 242));
         jLabelprecoproduto.setText("Preço:");
         getContentPane().add(jLabelprecoproduto, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 140, -1, -1));
-
-        txtNome.setText("Digite o nome");
-        getContentPane().add(txtNome, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 90, -1, 30));
-
-        txtPreco.setText("Digite o preço");
-        getContentPane().add(txtPreco, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 140, -1, 30));
+        getContentPane().add(txtNome, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 90, 110, 30));
+        getContentPane().add(txtPreco, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 140, 110, 30));
 
         cbTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Bebida", "Comida", " " }));
         getContentPane().add(cbTipo, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 192, -1, 30));

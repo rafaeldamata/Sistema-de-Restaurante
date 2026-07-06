@@ -68,6 +68,18 @@ public class Cliente {
     public void setBonus(){
         this.bonus = this.conta.calculaBonus();
     }
+    public void removerItemPedido(String nome, int quantidade){
+    for (Pedido p : this.getListadePedidos()){
+        for (ItemPedido item : p.getPedido()){
+            if (item.getItemCardapio().getNome().equals(nome) && item.getQuantidade() == quantidade){
+                p.removerPedido(item);
+                return;
+            }
+        }
+    }
+    
+}
+
     public static void main(String args[]) {
         // TODO code application logic here
     }

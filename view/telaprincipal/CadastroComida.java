@@ -50,39 +50,38 @@ public class CadastroComida extends javax.swing.JDialog {
                 closeDialog(evt);
             }
         });
-        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Gill Sans Ultra Bold", 0, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 0, 0));
         jLabel1.setText("RESTAURANTE KIGAÚCHO");
-        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 30, -1, -1));
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 30, -1, -1));
 
         labelDescricao.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         labelDescricao.setForeground(new java.awt.Color(242, 242, 242));
         labelDescricao.setText("Descrição:");
-        add(labelDescricao, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 100, -1, -1));
+        getContentPane().add(labelDescricao, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 100, -1, -1));
 
         jLabelIngredientes.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabelIngredientes.setForeground(new java.awt.Color(242, 242, 242));
         jLabelIngredientes.setText("Ingredientes:");
-        add(jLabelIngredientes, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 170, -1, -1));
+        getContentPane().add(jLabelIngredientes, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 170, -1, -1));
 
-        txtDescricao.setText("Digite a descrição da comida");
-        add(txtDescricao, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 100, 180, 30));
+        txtDescricao.addActionListener(this::txtDescricaoActionPerformed);
+        getContentPane().add(txtDescricao, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 100, 180, 30));
 
         txtIngredientes.setColumns(20);
         txtIngredientes.setLineWrap(true);
         txtIngredientes.setRows(5);
-        txtIngredientes.setText("Digite os ingredientes da comida");
         txtIngredientes.setWrapStyleWord(true);
         jScrollPane1.setViewportView(txtIngredientes);
 
-        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 160, 220, 90));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 160, 220, 90));
 
         btnCadastrarComida.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         btnCadastrarComida.setText("Cadastar Comida");
         btnCadastrarComida.addActionListener(this::btnCadastrarComidaActionPerformed);
-        add(btnCadastrarComida, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 260, -1, -1));
+        getContentPane().add(btnCadastrarComida, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 260, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -113,6 +112,10 @@ public class CadastroComida extends javax.swing.JDialog {
         dispose();
         
     }//GEN-LAST:event_btnCadastrarComidaActionPerformed
+
+    private void txtDescricaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDescricaoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtDescricaoActionPerformed
 
     /**
      * @param args the command line arguments

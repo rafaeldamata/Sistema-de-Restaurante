@@ -81,7 +81,7 @@ public class Loginform extends javax.swing.JDialog {
         btnLogin.setText("Fazer login");
         btnLogin.addActionListener(this::btnLoginActionPerformed);
         getContentPane().add(btnLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 210, -1, -1));
-        getContentPane().add(lblLogo, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 40, 250, 250));
+        getContentPane().add(lblLogo, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 80, 250, 250));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
         jLabel1.setText("Login do Cliente");

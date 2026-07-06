@@ -6,6 +6,7 @@ import com.mycompany.sstema.restaurante.Cozinha;
 import com.mycompany.sstema.restaurante.ItemPedido;
 import com.mycompany.sstema.restaurante.Pedido;
 import com.mycompany.sstema.restaurante.MinhasMesas;
+import javax.swing.JOptionPane;
 import java.util.ArrayList;
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -73,7 +74,7 @@ private void atualizarListaDePedidos(ArrayList<Pedido> listaPedidos) {
     }
   }
 }
-    
+
 public void atualizarListaDePedidos(Pedido p) {
     // 1. Pega o modelo da tabela (Substitua 'tabelaPedidos' pelo nome real da sua variável JTable)
     javax.swing.table.DefaultTableModel modelo = (javax.swing.table.DefaultTableModel) tabelaPedidos.getModel();
@@ -177,6 +178,7 @@ public void atualizarListaDePedidos(Pedido p) {
         btnNovoPedido.addActionListener(this::btnNovoPedidoActionPerformed);
 
         btnRemoverPedido.setText("Remover Pedido");
+        btnRemoverPedido.addActionListener(this::btnRemoverPedidoActionPerformed);
 
         btnFecharConta.setText("Fechar Conta");
 
@@ -184,6 +186,7 @@ public void atualizarListaDePedidos(Pedido p) {
         btnEscolherMesa.addActionListener(this::btnEscolherMesaActionPerformed);
 
         btnClientesdaMesa.setText("Clientes da Mesa");
+        btnClientesdaMesa.addActionListener(this::btnClientesdaMesaActionPerformed);
 
         LblPedido.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         LblPedido.setText("Pedidos do Cliente");
@@ -318,6 +321,33 @@ public void atualizarListaDePedidos(Pedido p) {
         telaPedido.setVisible(true);
         clienteAtual.addPedido(p,cozinha);
     }//GEN-LAST:event_btnNovoPedidoActionPerformed
+
+    private void btnRemoverPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoverPedidoActionPerformed
+        int linha_selecionada = tabelaPedidos.getSelectedRow();
+        String status = tabelaPedidos.getValueAt(linha_selecionada, 3).toString();
+        
+        if (status.equals("ENTREGUE")){
+            javax.swing.JOptionPane.showMessageDialog(this, "O pedido já foi entregue!","Erro ao remover pedido",JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (linha_selecionada != -1){
+            String nomeProduto = tabelaPedidos.getValueAt(linha_selecionada, 0).toString(); 
+            int quantidade = Integer.parseInt(tabelaPedidos.getValueAt(linha_selecionada, 1).toString()); 
+            float preco = Float.parseFloat(tabelaPedidos.getValueAt(linha_selecionada, 2).toString()); 
+            clienteAtual.removerItemPedido(nomeProduto, quantidade);
+            JOptionPane.showMessageDialog(this, "Item removido com sucesso!");
+            this.atualizarListaDePedidos(clienteAtual.getListadePedidos());
+        }
+        else{
+            JOptionPane.showMessageDialog(this, "Selecione uma linha primeiro!");
+        }
+    }//GEN-LAST:event_btnRemoverPedidoActionPerformed
+
+    private void btnClientesdaMesaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClientesdaMesaActionPerformed
+        TelaClientesMesa telaClientesMesa = new TelaClientesMesa(clienteAtual);
+        telaClientesMesa.setLocationRelativeTo(this);
+        telaClientesMesa.setVisible(true);
+    }//GEN-LAST:event_btnClientesdaMesaActionPerformed
 
     /**
      * @param args the command line arguments
