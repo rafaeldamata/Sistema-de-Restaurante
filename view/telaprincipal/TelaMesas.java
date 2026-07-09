@@ -205,8 +205,8 @@ private void mostrarMesas(){
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> {
-    MeusClientes listaClientes = new MeusClientes(); // Se você precisar criar a lista aqui
-    Cliente clientePreenchido = new Cliente("Nome", "CPF", "Telefone", listaClientes);
+    
+    Cliente clientePreenchido = new Cliente("Nome", "CPF", "Telefone");
     
     new TelaMesas(new MinhasMesas(), clientePreenchido,null).setVisible(true);
 });

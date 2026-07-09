@@ -181,6 +181,7 @@ public void atualizarListaDePedidos(Pedido p) {
         btnRemoverPedido.addActionListener(this::btnRemoverPedidoActionPerformed);
 
         btnFecharConta.setText("Fechar Conta");
+        btnFecharConta.addActionListener(this::btnFecharContaActionPerformed);
 
         btnEscolherMesa.setText("Escolher Mesa");
         btnEscolherMesa.addActionListener(this::btnEscolherMesaActionPerformed);
@@ -348,6 +349,20 @@ public void atualizarListaDePedidos(Pedido p) {
         telaClientesMesa.setLocationRelativeTo(this);
         telaClientesMesa.setVisible(true);
     }//GEN-LAST:event_btnClientesdaMesaActionPerformed
+
+    private void btnFecharContaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFecharContaActionPerformed
+        for (Cliente c : clienteAtual.getMesa().getListaClientes()){
+            for (Pedido p : clienteAtual.getListadePedidos()){
+                if (p.getStatus().equals("EM ABERTO")){
+                    javax.swing.JOptionPane.showMessageDialog(this, "Ainda há pedidos em aberto!","Erro ao fechar conta",JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+            }
+        }
+        TelaConta telaConta = new TelaConta(clienteAtual.getMesa(),clienteAtual);
+        telaConta.setLocationRelativeTo(this);
+        telaConta.setVisible(true);
+    }//GEN-LAST:event_btnFecharContaActionPerformed
 
     /**
      * @param args the command line arguments

@@ -36,6 +36,12 @@ public class Mesa {
             total++;
         return total;
     }
+    public void removerTodosClientes(){
+        this.listaClientes.clear();
+    }
+    public ArrayList<Cliente> getClientes(){
+        return this.listaClientes;
+    }
     /**
      * @param args the command line arguments
      */

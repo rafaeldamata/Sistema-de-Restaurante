@@ -44,6 +44,7 @@ public class telaprincipal extends javax.swing.JFrame {
         btnclickcliente = new javax.swing.JButton();
         btnclickproduto = new javax.swing.JButton();
         btnLogin = new javax.swing.JButton();
+        btnCozinha = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(0, 0, 0));
@@ -64,6 +65,10 @@ public class telaprincipal extends javax.swing.JFrame {
         btnLogin.setText("Login");
         btnLogin.addActionListener(this::btnLoginActionPerformed);
 
+        btnCozinha.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnCozinha.setText("Visualizar Cozinha");
+        btnCozinha.addActionListener(this::btnCozinhaActionPerformed);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -80,7 +85,10 @@ public class telaprincipal extends javax.swing.JFrame {
                             .addComponent(btnclickcliente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(373, 373, 373)
-                        .addComponent(btnLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(359, 359, 359)
+                        .addComponent(btnCozinha)))
                 .addContainerGap(309, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -92,9 +100,11 @@ public class telaprincipal extends javax.swing.JFrame {
                 .addComponent(btnclickcliente)
                 .addGap(18, 18, 18)
                 .addComponent(btnclickproduto)
-                .addGap(68, 68, 68)
+                .addGap(18, 18, 18)
+                .addComponent(btnCozinha)
+                .addGap(27, 27, 27)
                 .addComponent(btnLogin)
-                .addContainerGap(79, Short.MAX_VALUE))
+                .addContainerGap(75, Short.MAX_VALUE))
         );
 
         pack();
@@ -127,6 +137,12 @@ javax.swing.JOptionPane.showMessageDialog(this, "Tela Principal recebeu o client
         telaLogin.setVisible(true);
     }//GEN-LAST:event_btnLoginActionPerformed
 
+    private void btnCozinhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCozinhaActionPerformed
+        TelaCozinha telaCozinha = new TelaCozinha(this.cozinha);
+        telaCozinha.setLocationRelativeTo(this);
+        telaCozinha.setVisible(true);
+    }//GEN-LAST:event_btnCozinhaActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -153,6 +169,7 @@ javax.swing.JOptionPane.showMessageDialog(this, "Tela Principal recebeu o client
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnCozinha;
     private javax.swing.JButton btnLogin;
     private javax.swing.JButton btnclickcliente;
     private javax.swing.JButton btnclickproduto;

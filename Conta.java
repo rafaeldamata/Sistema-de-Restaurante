@@ -2,13 +2,16 @@ package com.mycompany.sstema.restaurante;
 public class Conta {
 
     private float valorTotal;
+    private float valorPago;
     private boolean paga;
 
     public Conta(){
         valorTotal = 0;
         paga = false;
     }
-
+    public void setValorTotal(float valorTotal){
+        this.valorTotal = valorTotal;
+    }
     public void adicionarValor(float valor){
         valorTotal += valor;
     }

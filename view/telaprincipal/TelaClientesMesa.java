@@ -5,7 +5,7 @@
 package com.mycompany.sstema.restaurante.view.telaprincipal;
 import com.mycompany.sstema.restaurante.Cliente;
 import com.mycompany.sstema.restaurante.Mesa;
-import com.mycompany.sstema.restaurante.MeusClientes;
+
 /**
  *
  * @author rafin
@@ -116,7 +116,7 @@ public class TelaClientesMesa extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new TelaClientesMesa(new Cliente("Cliente teste","000.000.000-00","email@gmail.com",new MeusClientes())).setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> new TelaClientesMesa(new Cliente("Cliente teste","000.000.000-00","email@gmail.com")).setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

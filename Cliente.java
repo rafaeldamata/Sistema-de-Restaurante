@@ -20,17 +20,19 @@ public class Cliente {
     private Mesa mesa;
     
       
-    public Cliente(String nome, String cpf, String email,MeusClientes meusCli){
+    public Cliente(String nome, String cpf, String email){
         this.nome = nome;
         this.cpf = cpf;
         this.email = email;
         this.bonus = 0f;
         this.conta = new Conta();
         this.listaPedidos = new ArrayList<>();
-        meusCli.addCliente(this);
      }
     public String getCPF(){
         return this.cpf;
+    }
+    public Conta getConta(){
+        return this.conta;
     }
     public ArrayList<Pedido> getListadePedidos(){
         return this.listaPedidos;
@@ -67,6 +69,14 @@ public class Cliente {
     }
     public void setBonus(){
         this.bonus = this.conta.calculaBonus();
+    }
+    public void calculaBonus(float valorTotal){
+        this.bonus = valorTotal * 0.1f;
+    }
+    public void removerDados(){
+        this.listaPedidos.clear();
+        this.conta.setValorTotal(0f);
+        this.mesa = null;
     }
     public void removerItemPedido(String nome, int quantidade){
     for (Pedido p : this.getListadePedidos()){

@@ -112,7 +112,8 @@ public class CadastroClienteform extends javax.swing.JDialog {
             javax.swing.JOptionPane.showMessageDialog(this, "Por favor, preencha todos os campos.");
             return;
         }
-        this.clienteNovo = new Cliente(nome, cpf, email, meusClientes);
+        this.clienteNovo = new Cliente(nome, cpf, email);
+        meusClientes.addCliente(clienteNovo);
         this.dispose();
     }//GEN-LAST:event_jButtonSalvarcadastroActionPerformed
 

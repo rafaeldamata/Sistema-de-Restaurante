@@ -14,7 +14,7 @@ public class Cozinha {
     private ArrayList<Pedido> listaPedidos;
     
     public Cozinha(){
-        this.listaPedidos = new ArrayList<Pedido>();
+        this.listaPedidos = new ArrayList<>();
     }
     public void addPedido(Pedido p){
         this.listaPedidos.add(p);
@@ -22,6 +22,9 @@ public class Cozinha {
     public void entregarPedido(Pedido p){
         String status = "ENTREGUE";
         p.setStatus(status);
+    }
+    public ArrayList<Pedido> getPedidos(){
+        return this.listaPedidos;
     }
     public static void main(String args[]) {
         // TODO code application logic here

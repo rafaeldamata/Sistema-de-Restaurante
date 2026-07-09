@@ -26,6 +26,9 @@ public class ItemPedido {
     public float getPreco(){
         return this.item.getPreco();
     }
+    public float getSubtotal() {
+        return item.getPreco() * quantidade;
+    }
     public static void main(String args[]) {
         // TODO code application logic here
     }
